@@ -5,9 +5,6 @@ const initialItems = [
   { id: 2, description: "Socks", quantity: 12, packed: false },
 ];
 
-
-
-
 function App() {
   return (
     <div className="app">
@@ -30,10 +27,25 @@ function Form() {
   );
 }
 function PackingList() {
-  return <div className="list">{
-    initialItems.map((item)=> )
-  }</div>;
+  return (
+    <div className="list">
+      {initialItems.map((item) => (
+        <Item item={item} key={item.id} />
+      ))}
+    </div>
+  );
 }
+
+function Item({ item }) {
+  const { quantity, description } = item;
+  return (
+    <div>
+      <span>{quantity}</span>
+      <span>{description}</span>
+    </div>
+  );
+}
+
 function Stats() {
   return (
     <footer className="stats">
