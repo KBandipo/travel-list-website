@@ -1,8 +1,9 @@
-import React from "react";
+// import React from "react";
 
 const initialItems = [
   { id: 1, description: "Passports", quantity: 2, packed: false },
   { id: 2, description: "Socks", quantity: 12, packed: false },
+  { id: 3, description: "charger", quantity: 12, packed: true },
 ];
 
 function App() {
@@ -20,29 +21,46 @@ function Logo() {
   return <h1>🏝️ Far Away 🧳</h1>;
 }
 function Form() {
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log(event);
+  }
   return (
-    <div className="add-form">
+    <form className="add-form" onSubmit={handleSubmit}>
       <h3>Needs for your trip</h3>
-    </div>
+      <select>
+        {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
+          <option value={num} key={num}>
+            {num}
+          </option>
+        ))}
+      </select>
+      <input type="text" placeholder="Item..." />
+      <button>ADD</button>
+    </form>
   );
 }
 function PackingList() {
   return (
     <div className="list">
-      {initialItems.map((item) => (
-        <Item item={item} key={item.id} />
-      ))}
+      <ul>
+        {initialItems.map((item) => (
+          <Item item={item} key={item.id} />
+        ))}
+      </ul>
     </div>
   );
 }
 
 function Item({ item }) {
-  const { quantity, description } = item;
+  const { quantity, description, packed } = item;
   return (
-    <div>
-      <span>{quantity}</span>
-      <span>{description}</span>
-    </div>
+    <li>
+      <span style={packed ? { textDecoration: "line-through" } : {}}>
+        {quantity} {description}
+      </span>
+      <button> &times;</button>
+    </li>
   );
 }
 
