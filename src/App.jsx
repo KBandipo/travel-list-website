@@ -12,7 +12,7 @@ function App() {
 
   function handleAddItems(item) {
     setItems((items) => [...items, item]);
-    console.log(items);
+    // console.log(items);
   }
 
   function handleDeleteItems(id) {
