@@ -5,7 +5,7 @@ import React, { useState } from "react";
 //   { id: 2, description: "Socks", quantity: 12, packed: false },
 //   { id: 3, description: "charger", quantity: 12, packed: true },
 //   { id: 6, description: "PC", quantity: 2, packed: true },
-// { id: 6, description: "PC", quantity: 2, packed: true },
+// { id: 7, description: "PC", quantity: 2, packed: true },
 // ];
 
 function App() {
@@ -22,7 +22,9 @@ function App() {
 
   function handleToggleItem(id) {
     setItems((items) =>
-      items.map((item) => (item.id ? { ...item, packed: !item.packed } : item))
+      items.map((item) =>
+        item.id === id ? { ...item, packed: !item.packed } : item
+      )
     );
   }
 
@@ -35,7 +37,7 @@ function App() {
         onDeleteItems={handleDeleteItems}
         onToggleItem={handleToggleItem}
       />
-      <Stats />
+      <Stats items={items} />
     </div>
   );
 }
@@ -50,7 +52,7 @@ function Form({ onAddItems }) {
   function handleSubmit(e) {
     e.preventDefault();
     if (!description) return;
-    const newItem = { description, quantity, package: false, id: Date.now() };
+    const newItem = { description, quantity, packed: false, id: Date.now() };
     console.log(newItem);
     onAddItems(newItem);
     setDescription("");
@@ -115,10 +117,24 @@ function Item({ item, onDeleteItems, onToggleItem }) {
   );
 }
 
-function Stats() {
+function Stats({ items }) {
+  if (!items.length)
+    return (
+      <p className="stats">
+        <em>Start adding some items to your packing list</em>
+      </p>
+    );
+
+  const numItems = items.length;
+  const numPacked = items.filter((item) => item.packed).length;
+  const percentage = Math.round((numPacked / numItems) * 100);
   return (
     <footer className="stats">
-      <em>👜You have X items on your list, and you alredy packed X (X%)</em>
+      <em>
+        {percentage === 100
+          ? "You got everything! Ready to go ✈"
+          : `👜You have ${numItems} items on your list, and you already packed ${numPacked} (${percentage}%)`}
+      </em>
     </footer>
   );
 }
