@@ -10,11 +10,12 @@ const initialItems = [
   { id: 2, description: "Socks", quantity: 12, packed: false },
   { id: 3, description: "charger", quantity: 12, packed: true },
   { id: 6, description: "PC", quantity: 2, packed: true },
-{ id: 7, description: "PC", quantity: 2, packed: true },
+
 ]; 
 */
 
 function App() {
+  // Use useState to monitor the changes
   const [items, setItems] = useState([]);
 
   function handleAddItems(item) {
